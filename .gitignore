@@ -2,5 +2,6 @@
 /*
 # Allow
 !/src/
+!/lib/
 !.gitignore
 !README.md
