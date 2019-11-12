@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -13,10 +15,16 @@ public class Sender {
 	Socket sock;
 	ObjectOutputStream output;
 	XMLOutputter xmlOut;
+	FileOutputStream fos = null;
 	public Sender() throws IOException {
 		//sock = new Socket(addr, port);
 		//output = new ObjectOutputStream(sock.getOutputStream());
 		xmlOut = new XMLOutputter(Format.getPrettyFormat());
+		try {
+			fos = new FileOutputStream("Sender-Objects.xml");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void start() {
@@ -26,6 +34,7 @@ public class Sender {
 		}
 		try {
 			xmlOut.output(serializer.getDocument(),System.out);
+			xmlOut.output(serializer.getDocument(),fos);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
