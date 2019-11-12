@@ -22,9 +22,10 @@ public class Creator {
 		double par2;
 		char par3;
 		boolean par4;
+		String input;
 		System.out.println("A contains\n an int\n a double\n a char \n a boolean ");
-		String input = scanner.nextLine();
 		System.out.println("Enter the int:");
+		input = scanner.nextLine();
 		par1 = Integer.parseInt(input);
 		System.out.println("Enter the double:");
 		input = scanner.nextLine();

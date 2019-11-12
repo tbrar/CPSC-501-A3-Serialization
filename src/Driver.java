@@ -7,13 +7,15 @@ public class Driver {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Sender to Receiver?");
 		String selection = input.nextLine();
+		Sender sender = null;
 		if(selection.equals("Sender")) {
 			try {
-				Sender sender = new Sender();
+				sender = new Sender();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			sender.start();
 		}
 		else if(selection.equals("Receiver")) {
 			
