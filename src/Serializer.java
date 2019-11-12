@@ -41,6 +41,7 @@ public class Serializer {
 				fel.setAttribute("declaringclass", field.getDeclaringClass().getSimpleName());
 				if(field.getType().isPrimitive()) {
 					Element value = new Element("value");
+					fel.addContent(value);
 					try {
 						value.setText(field.get(obj).toString());
 					} catch (IllegalArgumentException | IllegalAccessException e) {
