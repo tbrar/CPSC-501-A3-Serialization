@@ -10,8 +10,10 @@ public class Receiver {
 	ServerSocket serverSocket;
 	Socket socket;
 	ObjectInputStream in;
+	Deserializer deserializer;
 	 
 	public Receiver(){
+		deserializer = new Deserializer();
 	}
 	
 	public void start() throws IOException {
@@ -28,5 +30,6 @@ public class Receiver {
 			e.printStackTrace();
 		}
 		in.close();
+		deserializer.deserialize(doc);
 	}
 }

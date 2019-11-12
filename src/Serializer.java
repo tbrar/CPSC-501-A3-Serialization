@@ -23,7 +23,7 @@ public class Serializer {
 		if(!hashes.contains(String.valueOf(obj.hashCode()))){
 			Element cl = new Element("object");
 			root.addContent(cl);
-			cl.setAttribute("class", obj.getClass().getSimpleName());
+			cl.setAttribute("class", obj.getClass().getName());
 			cl.setAttribute("id", String.valueOf(obj.hashCode()));
 			hashes.add(String.valueOf(obj.hashCode()));
 			serializeFields(obj,cl);
@@ -38,7 +38,7 @@ public class Serializer {
 				Element fel = new Element("field");
 				cl.addContent(fel);
 				fel.setAttribute("name", field.getName());
-				fel.setAttribute("declaringclass", field.getDeclaringClass().getSimpleName());
+				fel.setAttribute("declaringclass", field.getDeclaringClass().getName());
 				if(field.getType().isPrimitive()) {
 					Element value = new Element("value");
 					fel.addContent(value);
