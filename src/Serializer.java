@@ -36,11 +36,11 @@ public class Serializer {
 			for(Field field : fields) {
 				field.setAccessible(true);
 				Element fel = new Element("field");
-				cl.addContent(fel);
 				fel.setAttribute("name", field.getName());
 				fel.setAttribute("declaringclass", field.getDeclaringClass().getName());
 				if(field.getType().isPrimitive()) {
 					Element value = new Element("value");
+					cl.addContent(fel);
 					fel.addContent(value);
 					try {
 						value.setText(field.get(obj).toString());
@@ -51,6 +51,8 @@ public class Serializer {
 				}
 				else {
 					Element ref = new Element("reference");
+					cl.addContent(0,fel);
+					fel.addContent(ref);
 					try {
 						ref.setText(String.valueOf(field.get(obj).hashCode()));
 					} catch (IllegalArgumentException | IllegalAccessException e) {

@@ -28,9 +28,15 @@ public class Sender {
 	}
 	
 	public void start() {
+		boolean exit = false;
+		while(!exit)
 		switch(creator.displayMenu()) {
 		case "1":
 			serializer.serializeClass(creator.createA());
+			break;
+		case "exit":
+			exit = true;
+			break;
 		}
 		try {
 			xmlOut.output(serializer.getDocument(),System.out);
