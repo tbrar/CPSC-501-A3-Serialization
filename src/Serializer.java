@@ -22,7 +22,7 @@ public class Serializer {
 	public void serializeClass(Object obj) {
 		if(!hashes.contains(String.valueOf(obj.hashCode()))){
 			Element cl = new Element("object");
-			root.addContent(cl);
+			root.addContent(0,cl);
 			cl.setAttribute("class", obj.getClass().getName());
 			cl.setAttribute("id", String.valueOf(obj.hashCode()));
 			hashes.add(String.valueOf(obj.hashCode()));
@@ -38,9 +38,9 @@ public class Serializer {
 				Element fel = new Element("field");
 				fel.setAttribute("name", field.getName());
 				fel.setAttribute("declaringclass", field.getDeclaringClass().getName());
+				cl.addContent(fel);
 				if(field.getType().isPrimitive()) {
 					Element value = new Element("value");
-					cl.addContent(fel);
 					fel.addContent(value);
 					try {
 						value.setText(field.get(obj).toString());
@@ -51,10 +51,10 @@ public class Serializer {
 				}
 				else {
 					Element ref = new Element("reference");
-					cl.addContent(0,fel);
 					fel.addContent(ref);
 					try {
 						ref.setText(String.valueOf(field.get(obj).hashCode()));
+						serializeClass(field.get(obj));
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

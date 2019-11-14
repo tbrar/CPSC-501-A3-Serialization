@@ -34,6 +34,8 @@ public class Sender {
 		case "1":
 			serializer.serializeClass(creator.createA());
 			break;
+		case "2":
+			serializer.serializeClass(creator.createB());
 		case "exit":
 			exit = true;
 			break;

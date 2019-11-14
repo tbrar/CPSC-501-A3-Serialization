@@ -2,6 +2,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -10,9 +11,12 @@ import org.jdom2.Element;
 public class Deserializer {
 	Visualizer visualizer;
 	List<Object> objects;
+	HashMap<String, Object> hash;
+
 	public Deserializer() {
 		visualizer = new Visualizer();
 		objects = new ArrayList<Object>();
+		hash = new HashMap<String, Object>();
 	}
 
 	public void deserialize(Document doc) {
@@ -111,7 +115,17 @@ public class Deserializer {
 						e.printStackTrace();
 						}
 					}
+				else {
+					Object objval = hash.get(val);
+					try {
+						fd.set(obj, objval);
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+			}
+			hash.put(String.valueOf(obj.hashCode()), obj);
 			objects.add(obj);
 		}
 		

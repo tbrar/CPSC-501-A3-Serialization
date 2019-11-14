@@ -39,4 +39,12 @@ public class Creator {
 		A obj = new A(par1, par2, par3, par4);
 		return obj;
 	}
+	
+	public B createB() {
+		
+		System.out.println("B contains\n an A object");
+		A par1 = createA();
+		B obj = new B(par1);
+		return obj;
+	}
 }
