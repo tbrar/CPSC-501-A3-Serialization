@@ -47,4 +47,25 @@ public class Creator {
 		B obj = new B(par1);
 		return obj;
 	}
+	
+	public C createC() {
+		System.out.println("C contains\n a char array");
+		int length = Integer.parseInt(scanner.nextLine());
+		C obj = new C(length);
+		for(int i = 0; i<length; i++){
+			boolean valid = false;
+			while(valid == false) {
+				System.out.println("Enter a character:");
+				String input = scanner.nextLine();
+				if(input.length() == 1) {
+					valid = true;
+					obj.add(input.charAt(0), i);
+				}
+				else {
+					System.out.println("That is not valid input!");
+				}
+			}
+		}
+		return obj;
+	}
 }

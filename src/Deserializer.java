@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -33,99 +34,138 @@ public class Deserializer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			try {
-				ctr = c.getDeclaredConstructor();
-			} catch (NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(c.isArray()) {
+				obj = Array.newInstance(c.getComponentType(),Integer.parseInt(cl.getAttributeValue("length")));
+				List<Element> vals = cl.getChildren();
+				for(int j = 0; j< vals.size(); j++) {
+					String val = vals.get(j).getValue();
+					if(c.getComponentType().equals(byte.class)) {
+						Array.setByte(obj, j, Byte.valueOf(val));
+					}
+					else if(c.getComponentType().equals(short.class)) {
+						Array.setShort(obj, j, Short.valueOf(val));
+					}
+					else if(c.getComponentType().equals(int.class)) {
+						Array.setInt(obj, j, Integer.valueOf(val));
+					}
+					else if(c.getComponentType().equals(long.class)) {
+						Array.setLong(obj, j, Long.valueOf(val));
+					}
+					else if(c.getComponentType().equals(float.class)) {
+						Array.setFloat(obj, j, Float.valueOf(val));
+					}
+					else if(c.getComponentType().equals(double.class)) {
+						Array.setDouble(obj, j, Double.valueOf(val));
+					}
+					else if(c.getComponentType().equals(char.class)) {
+						Array.setChar(obj, j, val.charAt(0));
+					}
+					else if(c.getComponentType().equals(boolean.class)) {
+						Array.setBoolean(obj, j, Boolean.valueOf(val));
+					}
+					else {
+						Object objval = hash.get(val);
+						Array.set(obj, j, objval);
+						objects.remove(objval);
+					}
+				}
 			}
-			try {
-				obj = ctr.newInstance();
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Field[] fields = c.getDeclaredFields();
-			for (int j = 0; j < fields.length; j++) {
-				Field fd = fields[j];
-				fd.setAccessible(true);
-				String val = cl.getChildren().get(j).getChildren().get(0).getValue();
-				if (fd.getType().equals(byte.class)) {
-					try {
-						fd.set(obj, Byte.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			else {
+				try {
+					ctr = c.getDeclaredConstructor();
+				} catch (NoSuchMethodException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				else if(fd.getType().equals(short.class)) {
-					try {
-						fd.set(obj, Short.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				try {
+					obj = ctr.newInstance();
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				else if(fd.getType().equals(int.class)) {
-					try {
-						fd.set(obj, Integer.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(fd.getType().equals(long.class)) {
-					try {
-						fd.set(obj, Long.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(fd.getType().equals(float.class)) {
-					try {
-						fd.set(obj, Float.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(fd.getType().equals(double.class)) {
-					try {
-						fd.set(obj, Double.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(fd.getType().equals(char.class)) {
-					try {
-						fd.set(obj, Character.valueOf(val.charAt(0)));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else if(fd.getType().equals(boolean.class)) {
-					try {
-						fd.set(obj, Boolean.valueOf(val));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				Field[] fields = c.getDeclaredFields();
+				for (int j = 0; j < fields.length; j++) {
+					Field fd = fields[j];
+					fd.setAccessible(true);
+					String val = cl.getChildren().get(j).getChildren().get(0).getValue();
+					if (fd.getType().equals(byte.class)) {
+						try {
+							fd.set(obj, Byte.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
-				else {
-					Object objval = hash.get(val);
-					try {
-						fd.set(obj, objval);
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					else if(fd.getType().equals(short.class)) {
+						try {
+							fd.set(obj, Short.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else if(fd.getType().equals(int.class)) {
+						try {
+							fd.set(obj, Integer.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else if(fd.getType().equals(long.class)) {
+						try {
+							fd.set(obj, Long.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else if(fd.getType().equals(float.class)) {
+						try {
+							fd.set(obj, Float.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else if(fd.getType().equals(double.class)) {
+						try {
+							fd.set(obj, Double.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else if(fd.getType().equals(char.class)) {
+						try {
+							fd.set(obj, Character.valueOf(val.charAt(0)));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					else if(fd.getType().equals(boolean.class)) {
+						try {
+							fd.set(obj, Boolean.valueOf(val));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							}
+						}
+					else {
+						Object objval = hash.get(val);
+						try {
+							fd.set(obj, objval);
+							objects.remove(objval);
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
-			hash.put(String.valueOf(obj.hashCode()), obj);
+			hash.put(String.valueOf(elements.get(i).getAttributeValue("id")), obj);
 			objects.add(obj);
 		}
 		
@@ -135,5 +175,8 @@ public class Deserializer {
 		
 	}
 
+	public void deserializeArray(Object array) {
+		
+	}
 	
 }

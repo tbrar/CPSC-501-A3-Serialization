@@ -36,6 +36,10 @@ public class Sender {
 			break;
 		case "2":
 			serializer.serializeClass(creator.createB());
+			break;
+		case "3":
+			serializer.serializeClass(creator.createC());
+			break;
 		case "exit":
 			exit = true;
 			break;

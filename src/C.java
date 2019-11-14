@@ -2,6 +2,10 @@
 public class C {
 	char[] array;
 	
+	public C() {
+		
+	}
+	
 	public C(int length) {
 		array = new char[length];
 	}
