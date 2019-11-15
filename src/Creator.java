@@ -9,7 +9,7 @@ public class Creator {
 		System.out.println("1. A - object with primatives");
 		System.out.println("2. B - object with reference A and C");
 		System.out.println("3. C - object with array of primatives");
-		System.out.println("4. D - object with array of As");
+		System.out.println("4. D - object with array of Cs");
 		System.out.println("5. E - object with collection of As");
 		System.out.println("6. Exit");
 		System.out.println("Which object would you like to make:");
@@ -51,6 +51,7 @@ public class Creator {
 	
 	public C createC() {
 		System.out.println("C contains\n a char array");
+		System.out.println("Please enter the length of the char array:");
 		int length = Integer.parseInt(scanner.nextLine());
 		C obj = new C(length);
 		for(int i = 0; i<length; i++){
@@ -66,6 +67,17 @@ public class Creator {
 					System.out.println("That is not valid input!");
 				}
 			}
+		}
+		return obj;
+	}
+	
+	public D createD() {
+		System.out.println("D contains\n an array of C objects");
+		System.out.println("Please enter the length of the array of C objects:");
+		int length = Integer.parseInt(scanner.nextLine());
+		D obj = new D(length);
+		for(int i = 0; i<length; i++) {
+			obj.add(i, createC());
 		}
 		return obj;
 	}

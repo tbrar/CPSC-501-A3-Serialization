@@ -44,11 +44,17 @@ public class Sender {
 		case "3":
 			serializer.serializeClass(creator.createC());
 			break;
+		case "4":
+			serializer.serializeClass(creator.createD());
+			break;
 		case "5":
 			serializer.serializeClass(creator.createE());
 			break;
 		case "6":
 			exit = true;
+			break;
+		default:
+			System.out.println("That is not a valid option.");
 			break;
 		}
 		try {

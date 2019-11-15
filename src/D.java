@@ -1,12 +1,17 @@
 
 public class D {
-	A[] array;
+	C[] array;
 	
 	public D(){
 		
 	}
 	
-	public D(A[] array) {
-		array = this.array;
+	public D(int length) {
+		array = new C[length];
+	}
+	
+	public void add(int index, C obj) {
+		array[index] = obj;
+		return;
 	}
 }
