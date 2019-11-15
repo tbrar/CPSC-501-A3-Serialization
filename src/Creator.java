@@ -43,9 +43,10 @@ public class Creator {
 	
 	public B createB() {
 		
-		System.out.println("B contains\n an A object");
+		System.out.println("B contains\n an A object\n a C object");
 		A par1 = createA();
-		B obj = new B(par1);
+		C par2 = createC();
+		B obj = new B(par1, par2);
 		return obj;
 	}
 	
