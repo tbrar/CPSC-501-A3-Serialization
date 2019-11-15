@@ -11,6 +11,7 @@ public class Creator {
 		System.out.println("3. C - object with array of primatives");
 		System.out.println("4. D - object with array of As");
 		System.out.println("5. E - object with collection of As");
+		System.out.println("6. Exit");
 		System.out.println("Which object would you like to make:");
 		String input = scanner.nextLine();
 		return input;

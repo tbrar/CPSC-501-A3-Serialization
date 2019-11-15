@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -17,6 +18,9 @@ public class Sender {
 	XMLOutputter xmlOut;
 	FileOutputStream fos = null;
 	public Sender() throws IOException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter the IP address that you would like to connect to:");
+		String addr = scanner.nextLine();
 		sock = new Socket(addr, port);
 		output = new ObjectOutputStream(sock.getOutputStream());
 		xmlOut = new XMLOutputter(Format.getPrettyFormat());
@@ -43,7 +47,7 @@ public class Sender {
 		case "5":
 			serializer.serializeClass(creator.createE());
 			break;
-		case "exit":
+		case "6":
 			exit = true;
 			break;
 		}
