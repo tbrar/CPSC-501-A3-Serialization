@@ -2,7 +2,9 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,6 +70,36 @@ public class Deserializer {
 						Array.set(obj, j, objval);
 						objects.remove(objval);
 					}
+				}
+			}
+			else if(Collection.class.isAssignableFrom(c)) {
+				try {
+					ctr = c.getDeclaredConstructor();
+				} catch (NoSuchMethodException | SecurityException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				try {
+					obj = ctr.newInstance();
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				List<Element> vals = cl.getChildren();
+				for(int j = 0; j< vals.size(); j++) {
+					String val = vals.get(j).getValue();
+					Object objval = hash.get(val);
+					Method add;
+					try {
+						add = c.getDeclaredMethod("add",Object.class);
+						add.invoke(obj, objval);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					objects.remove(objval);
 				}
 			}
 			else {

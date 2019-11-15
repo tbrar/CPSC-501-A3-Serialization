@@ -21,6 +21,7 @@ public class Visualizer {
     	indent(depth);
     	printClassName(c);
     	System.out.println();
+ 
     	
 		if(c.isArray() && fieldarrayprinted == false) {
 	    	indent(depth);

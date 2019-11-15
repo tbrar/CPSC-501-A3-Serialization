@@ -68,4 +68,15 @@ public class Creator {
 		}
 		return obj;
 	}
+	
+	public E createE(){
+		System.out.println("E contains\n a list of A objects");
+		System.out.println("Please enter the length of the list of A objects:");
+		int length = Integer.parseInt(scanner.nextLine());
+		E obj = new E();
+		for(int i = 0; i<length; i++){
+			obj.add(createA());
+		}
+		return obj;
+	}
 }

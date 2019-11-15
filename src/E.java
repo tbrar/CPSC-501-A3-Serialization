@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class E {
-	List<A> list;
+	ArrayList<A> list;
 	
 	public E() {
 		list  = new ArrayList<A>();

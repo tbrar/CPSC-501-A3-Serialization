@@ -1,6 +1,9 @@
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jdom2.DocType;
@@ -46,7 +49,27 @@ public class Serializer {
 					Element ref = new Element("reference");
 					cl.addContent(ref);
 					ref.setText(String.valueOf(Array.get(obj, i).hashCode()));
+					serializeClass(Array.get(obj, i));
 				}
+			}
+		}
+		else if(obj instanceof Collection) {
+			Iterator it = ((Collection) obj).iterator();
+			int i = 0;
+			while(it.hasNext()) {
+				Object objval = it.next();
+				if(objval.getClass().isPrimitive()) {
+					Element value = new Element("value");
+					cl.addContent(value);
+					value.setText(objval.toString());
+				}
+				else {
+					Element ref = new Element("reference");
+					cl.addContent(ref);
+					ref.setText(String.valueOf(objval.hashCode()));
+					serializeClass(objval);
+				}
+				i++;
 			}
 		}
 		else {
