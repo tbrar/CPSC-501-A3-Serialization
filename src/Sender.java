@@ -36,19 +36,19 @@ public class Sender {
 		while(!exit)
 		switch(creator.displayMenu()) {
 		case "1":
-			serializer.serializeClass(creator.createA());
+			serializer.serialize(creator.createA());
 			break;
 		case "2":
-			serializer.serializeClass(creator.createB());
+			serializer.serialize(creator.createB());
 			break;
 		case "3":
-			serializer.serializeClass(creator.createC());
+			serializer.serialize(creator.createC());
 			break;
 		case "4":
-			serializer.serializeClass(creator.createD());
+			serializer.serialize(creator.createD());
 			break;
 		case "5":
-			serializer.serializeClass(creator.createE());
+			serializer.serialize(creator.createE());
 			break;
 		case "6":
 			exit = true;

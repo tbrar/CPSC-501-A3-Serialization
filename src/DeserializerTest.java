@@ -15,7 +15,7 @@ public class DeserializerTest {
 		char par3 = 'd';
 		boolean par4 = false;
 		A a = new A(par1, par2, par3, par4);
-		serial.serializeClass(a);
+		serial.serialize(a);
 		deserial.deserialize(serial.getDocument());
 		Assert.assertTrue(((A) deserial.objects.get(0)).prim1 == par1 
 				&& ((A) deserial.objects.get(0)).prim2 == par2 
@@ -37,7 +37,7 @@ public class DeserializerTest {
 		c.add('g', 1);
 		c.add('u', 2);
 		B b = new B(a,c);
-		serial.serializeClass(b);
+		serial.serialize(b);
 		deserial.deserialize(serial.getDocument());
 		Assert.assertTrue( ( (B) deserial.objects.get(0) ).obj1.prim1 == par1 
 				&& ( (B) deserial.objects.get(0) ).obj1.prim2 == par2 
@@ -56,7 +56,7 @@ public class DeserializerTest {
 		c.add('a', 0);
 		c.add('s', 1);
 		c.add('z', 2);
-		serial.serializeClass(c);
+		serial.serialize(c);
 		deserial.deserialize(serial.getDocument());
 		Assert.assertTrue(( (C) deserial.objects.get(0)).array[0] == 'a'
 				&& ( (C) deserial.objects.get(0)).array[1] == 's' 
