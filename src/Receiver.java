@@ -1,9 +1,13 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.jdom2.Document;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 public class Receiver {
 	int port = 49278;
@@ -11,9 +15,18 @@ public class Receiver {
 	Socket socket;
 	ObjectInputStream in;
 	Deserializer deserializer;
+	XMLOutputter xmlOut;
+	FileOutputStream fos = null;
 	 
 	public Receiver(){
 		deserializer = new Deserializer();
+		xmlOut = new XMLOutputter(Format.getPrettyFormat());
+		try {
+			fos = new FileOutputStream("Receiver-Objects.xml");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void start() throws IOException {
@@ -31,5 +44,6 @@ public class Receiver {
 		}
 		in.close();
 		deserializer.deserialize(doc);
+		xmlOut.output(doc,fos);
 	}
 }
